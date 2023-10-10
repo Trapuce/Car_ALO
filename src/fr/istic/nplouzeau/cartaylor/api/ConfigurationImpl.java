@@ -45,10 +45,10 @@ public class ConfigurationImpl implements  Configuration{
      * @Param chosenPart
      */
     @Override
-    public void selectPart(PartType chosenPart) {
-        if(chosenPart == null){
-            throw  new IllegalArgumentException();
-        }
+    public void selectPart(PartType chosenPart) throws  IllegalArgumentException {
+            if(chosenPart == null) {
+                throw new IllegalArgumentException();
+            }
             this.selectedParts.add(chosenPart);
     }
 
@@ -59,9 +59,15 @@ public class ConfigurationImpl implements  Configuration{
      * @Param category
      */
     @Override
-    public PartType getSelectionForCategory(Category category) {
+    public PartType getSelectionForCategory(Category category) throws  IllegalArgumentException {
          if(category == null){ new IllegalArgumentException();}
-         return this.
+
+        for(PartType p : selectedParts) {
+             if(p.getCategory().getName().equals(category.getName())){
+                 return p ;
+             }
+        }
+        return  null ;
     }
 
     /**

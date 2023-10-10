@@ -1,9 +1,11 @@
 package fr.istic.nplouzeau.cartaylor.api;
 
-public class Transmission implements Category{
-    private String name;
-    public Transmission (){
-        this.name = "Type of Transmission";
+public class CategoryImpl implements  Category{
+
+    private String name ;
+
+    public CategoryImpl(String name){
+        this.name = name ;
     }
     /**
      * @return category's name
