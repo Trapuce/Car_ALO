@@ -13,7 +13,7 @@ public interface Configurator {
      *
      * @param category
      * @return copy set of Partype
-     * @throws  NullArgumentException  if category is null
+     * @throws  IllegalArgumentException  if category is null
      */
     Set<PartType> getVariants(Category category);
     

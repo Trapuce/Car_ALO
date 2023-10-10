@@ -23,20 +23,20 @@ public interface Configuration {
     Set<PartType> getSelectedParts();
     /**
      * @Param chosenPart
-     * @throws NullArgumentException  if an chosenPart is null
+     * @throws  IllegalArgumentException  if an chosenPart is null
      */
     void selectPart(PartType chosenPart);
 
     /**
      * @Param category
      * @return PartType for category given
-     * @throws NullArgumentException if an category is null
+     * @throws IllegalArgumentException if an category is null
      */
     PartType getSelectionForCategory(Category category);
 
     /**
      * @Param categoryToClear
-     * @throws NullArgumentException if an categoryToClear is null
+     * @throws IllegalArgumentException if an categoryToClear is null
      */
     void unselectPartType(Category categoryToClear);
     /**
