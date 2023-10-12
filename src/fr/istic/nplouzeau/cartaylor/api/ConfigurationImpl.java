@@ -14,21 +14,30 @@ public class ConfigurationImpl implements  Configuration{
         this.selectedParts = new HashSet<>();
     }
     /**
+     * look in set of parts if there are two parts of the same categories
      * @return Boolean  True if the configuration is valid
      * else False
      */
     @Override
     public boolean isValid() {
-        return false;
+        for (PartType p: this.selectedParts) {
+                for (PartType p2 : this.selectedParts){
+                     if(!p.equals(p2.getName())  &&  p.getCategory().getName().equals(p2.getCategory().getName())){
+                          return  false ;
+                     }
+                }
+        }
+        return  true ;
     }
 
     /**
+     * look in set of parts if i have got all categories
      * @return Boolean True if the configuration isComplete
      * else False
      */
     @Override
     public boolean isComplete() {
-        return false;
+      return  false ;
     }
 
     /**
@@ -85,6 +94,6 @@ public class ConfigurationImpl implements  Configuration{
      */
     @Override
     public void clear() {
-
+            this.selectedParts = new HashSet<>();
     }
 }

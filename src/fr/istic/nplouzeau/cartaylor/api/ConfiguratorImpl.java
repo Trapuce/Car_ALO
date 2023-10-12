@@ -8,21 +8,14 @@ public class ConfiguratorImpl implements  Configurator{
 
     private Configuration configuration ;
     private Set<Category> categories = new HashSet<>();
+    private Set<PartType>  partTypes = new HashSet<>();
 
-    public ConfiguratorImpl(){
-        this.categories.add(new CategoryImpl("Engine"));
-        this.categories.add(new CategoryImpl("Transmission"));
-        this.categories.add(new CategoryImpl("Exterior"));
-        this.categories.add(new CategoryImpl("Interior"));
+    public ConfiguratorImpl(Factory factory){
         this.configuration = new ConfigurationImpl() ;
+        categories = factory.createCategories();
+        partTypes = factory.createPartTypes();
     }
-    public ConfiguratorImpl(Configuration configuration){
-        this.configuration = configuration;
-        this.categories.add(new CategoryImpl("Engine"));
-        this.categories.add(new CategoryImpl("Transmission"));
-        this.categories.add(new CategoryImpl("Exterior"));
-        this.categories.add(new CategoryImpl("Interior"));
-    }
+
     /**
      * @return copy set of categories
      */
@@ -42,36 +35,17 @@ public class ConfiguratorImpl implements  Configurator{
         for(Category c : categories) {
              if(c.getName().equals(category.getName())){
 
-                    switch (c.getName()){
-                        case "Engine" :
-                            res.add(new PartTypeImpl("EG100" , c));
-                            res.add(new PartTypeImpl("EG133" , c));
-                            res.add(new PartTypeImpl("EG210" , c));
-                            res.add(new PartTypeImpl("EG110" , c));
+                        for (PartType p : partTypes){
 
-                            break;
-                        case "Transmission":
-                            res.add(new PartTypeImpl("TM5" , c));
-                            res.add(new PartTypeImpl("TM6" , c));
-                            res.add(new PartTypeImpl("TA5" , c));
-                            res.add(new PartTypeImpl("TS6" , c));
-                            break;
-                        case "Exterior":
-                            res.add(new PartTypeImpl("xc" , c));
-                            res.add(new PartTypeImpl("xm" , c));
-                            res.add(new PartTypeImpl("xs" , c));
-                            break;
-                        case "Interior":
-                            res.add(new PartTypeImpl("IN" , c));
-                            res.add(new PartTypeImpl("IH" , c));
-                            res.add(new PartTypeImpl("IS" , c));
-                            break;
-                        default:
-                            System.out.println("Category unknown !!!!");
+                               if(p.getCategory().getName().equals(c.getName())){
+                                    res.add(p);
+                               }
+                        }
+
                     }
 
              }
-        }
+
         return  res ;
     }
 
@@ -91,6 +65,6 @@ public class ConfiguratorImpl implements  Configurator{
      */
     @Override
     public CompatibilityChecker getCompatibilityChecker() {
-        return null;
+        return  new CompatiblityManagerImpl();
     }
 }

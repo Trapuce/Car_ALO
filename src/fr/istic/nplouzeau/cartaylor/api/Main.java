@@ -5,7 +5,7 @@ public class Main {
     public static void  main(String [] ars){
 
 
-        Configurator conf = new ConfiguratorImpl();
+        Configurator conf = new ConfiguratorImpl(new ConfiguratorFactory());
 
           for(PartType p : conf.getVariants(new CategoryImpl("Exterior"))){
 
