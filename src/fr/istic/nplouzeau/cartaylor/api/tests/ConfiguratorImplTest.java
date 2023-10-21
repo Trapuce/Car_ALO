@@ -9,6 +9,7 @@ public class ConfiguratorImplTest {
 
     @Test
     public final void getCategoriesTest() {
+
         fail("Not yet implemented"); // TODO
     }
 

@@ -1,6 +1,7 @@
 package fr.istic.nplouzeau.cartaylor.api;
 
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 public class ConfiguratorImpl implements  Configurator{
@@ -9,6 +10,7 @@ public class ConfiguratorImpl implements  Configurator{
     private Configuration configuration ;
     private Set<Category> categories = new HashSet<>();
     private Set<PartType>  partTypes = new HashSet<>();
+    private Map<Category , Set<PartType>>  res ;
 
     public ConfiguratorImpl(Factory factory){
         this.configuration = new ConfigurationImpl() ;
@@ -54,7 +56,6 @@ public class ConfiguratorImpl implements  Configurator{
      */
     @Override
     public Configuration getConfiguration() {
-        //if(configuration == null){ return  new ConfigurationImpl() ;}
         return this.configuration ;
     }
 
