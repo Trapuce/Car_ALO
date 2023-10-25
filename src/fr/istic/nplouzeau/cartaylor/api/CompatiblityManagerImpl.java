@@ -51,7 +51,25 @@ public class CompatiblityManagerImpl implements  CompatibilityManager{
      */
     @Override
     public void addIncompatibilities(PartType reference, Set<PartType> target) {
-        partTypeIncompatibilities.put(reference ,target);
+
+            if(partTypeIncompatibilities.containsKey(reference)){
+                  Set<PartType> incompatibilties = partTypeIncompatibilities.get(reference);
+                  incompatibilties.addAll(target);
+                  partTypeIncompatibilities.put(reference,incompatibilties);
+            }else {
+                 partTypeIncompatibilities.put(reference, target);
+            }
+
+
+            for (PartType p : target){
+
+                    Set<PartType> incompatiblities = partTypeIncompatibilities.get(p);
+                    incompatiblities.add(reference);
+                    partTypeIncompatibilities.put(p,incompatiblities);
+            }
+
+
+
     }
 
     /**
@@ -63,6 +81,7 @@ public class CompatiblityManagerImpl implements  CompatibilityManager{
      */
     @Override
     public void removeIncompatibility(PartType reference, PartType target) {
+
         Set<PartType> tmp = new HashSet<>();
         tmp =  partTypeIncompatibilities.get(reference);
         for(PartType p : tmp){
@@ -72,6 +91,12 @@ public class CompatiblityManagerImpl implements  CompatibilityManager{
             }
         }
         partTypeIncompatibilities.put(reference , tmp);
+         Set<PartType> incompatibilities = partTypeIncompatibilities.get(target);
+         if(incompatibilities != null){
+             incompatibilities.remove(reference);
+             partTypeIncompatibilities.put(target , incompatibilities);
+         }
+
 
     }
 
@@ -84,7 +109,21 @@ public class CompatiblityManagerImpl implements  CompatibilityManager{
      */
     @Override
     public void addRequirements(PartType reference, Set<PartType> target) {
-                partTypeRequirements.put(reference,target);
+        if(partTypeRequirements.containsKey(reference)){
+            Set<PartType> requirements = partTypeRequirements.get(reference);
+            requirements.addAll(target);
+            partTypeRequirements.put(reference,requirements);
+        }else {
+            partTypeRequirements.put(reference, target);
+        }
+
+
+        for (PartType p : partTypeRequirements.get(reference)){
+
+            Set<PartType> requirements = partTypeRequirements.get(p);
+            requirements.add(reference);
+            partTypeRequirements.put(p,requirements);
+        }
     }
 
     /**
@@ -105,5 +144,10 @@ public class CompatiblityManagerImpl implements  CompatibilityManager{
             }
         }
         partTypeRequirements.put(reference , tmp);
+        Set<PartType> requirements = partTypeRequirements.get(target);
+        if(requirements != null){
+            requirements.remove(reference);
+            partTypeRequirements.put(target , requirements);
+        }
     }
 }

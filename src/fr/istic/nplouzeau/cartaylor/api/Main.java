@@ -7,7 +7,7 @@ public class Main {
 
         Configurator conf = new ConfiguratorImpl(new ConfiguratorFactory());
 
-          for(PartType p : conf.getVariants(new CategoryImpl("Exterior"))){
+          for(PartType p : ((ConfiguratorImpl) conf).partTypes){
 
               System.out.println(p.getName());
           }

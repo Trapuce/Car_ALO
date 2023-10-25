@@ -1,70 +1,81 @@
 package fr.istic.nplouzeau.cartaylor.api;
 
+import org.json.JSONObject;
+import org.json.JSONTokener;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.*;
 
 public class ConfiguratorFactory implements Factory {
 
 
     //private ;
+    private Set<PartType> setPartypes = new HashSet<>();
+    private Set<Category> setCategories = new HashSet<>();
+
 
 
     @Override
     public Set<Category> createCategories() {
-        Set<Category> res = new HashSet<>();
-        res.add(new CategoryImpl("Engine"));
-        res.add(new CategoryImpl("Transmission"));
-        res.add(new CategoryImpl("Exterior"));
-        res.add(new CategoryImpl("Interior"));
-        return res;
+        setCategories.add(new CategoryImpl("Engine"));
+        setCategories.add(new CategoryImpl("Transmission"));
+        setCategories.add(new CategoryImpl("Exterior"));
+        setCategories.add(new CategoryImpl("Interior"));
+        return setCategories;
     }
 
     @Override
     public Set<PartType> createPartTypes() {
-        Set<PartType> res = new HashSet<>();
 
-        res.add(new PartTypeImpl("EG100", new CategoryImpl("Engine")));
-        res.add(new PartTypeImpl("EG133", new CategoryImpl("Engine")));
-        res.add(new PartTypeImpl("EG210", new CategoryImpl("Engine")));
-        res.add(new PartTypeImpl("EG110", new CategoryImpl("Engine")));
+        setPartypes.add(new PartTypeImpl("EG100", new CategoryImpl("Engine")));
+        setPartypes.add(new PartTypeImpl("EG133", new CategoryImpl("Engine")));
+        setPartypes.add(new PartTypeImpl("EG210", new CategoryImpl("Engine")));
+        setPartypes.add(new PartTypeImpl("EG110", new CategoryImpl("Engine")));
+        setPartypes.add(new PartTypeImpl("ED180", new CategoryImpl("Engine")));
+        setPartypes.add(new PartTypeImpl("EH120", new CategoryImpl("Engine")));
 
-        res.add(new PartTypeImpl("TM5", new CategoryImpl("Transmission")));
-        res.add(new PartTypeImpl("TM6", new CategoryImpl("Transmission")));
-        res.add(new PartTypeImpl("TA5", new CategoryImpl("Transmission")));
-        res.add(new PartTypeImpl("TS6", new CategoryImpl("Transmission")));
+        setPartypes.add(new PartTypeImpl("TM5", new CategoryImpl("Transmission")));
+        setPartypes.add(new PartTypeImpl("TM6", new CategoryImpl("Transmission")));
+        setPartypes.add(new PartTypeImpl("TA5", new CategoryImpl("Transmission")));
+        setPartypes.add(new PartTypeImpl("TS6", new CategoryImpl("Transmission")));
 
-        res.add(new PartTypeImpl("xc", new CategoryImpl("Exterior")));
-        res.add(new PartTypeImpl("xm", new CategoryImpl("Exterior")));
-        res.add(new PartTypeImpl("xs", new CategoryImpl("Exterior")));
+        setPartypes.add(new PartTypeImpl("XC", new CategoryImpl("Exterior")));
+        setPartypes.add(new PartTypeImpl("XM", new CategoryImpl("Exterior")));
+        setPartypes.add(new PartTypeImpl("XS", new CategoryImpl("Exterior")));
 
-        res.add(new PartTypeImpl("IN", new CategoryImpl("Interior")));
-        res.add(new PartTypeImpl("IH", new CategoryImpl("Interior")));
-        res.add(new PartTypeImpl("IS", new CategoryImpl("Interior")));
-        return res;
+        setPartypes.add(new PartTypeImpl("IN", new CategoryImpl("Interior")));
+        setPartypes.add(new PartTypeImpl("IH", new CategoryImpl("Interior")));
+        setPartypes.add(new PartTypeImpl("IS", new CategoryImpl("Interior")));
+        return setPartypes;
+    }
+    @Override
+    public List<String> jsonReader(String partypeToSeek ){
+        File jsonFile = new File("/home/traore/Documents/Master/ALO/aco2019/src/fr/istic/nplouzeau/cartaylor/api/file.json");
+        FileReader fileReader = null;
+        try {
+            fileReader = new FileReader(jsonFile);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        JSONTokener tokener = new JSONTokener(fileReader);
+
+        JSONObject jsonData = new JSONObject(tokener);
+
+
+        JSONObject incompatibilities = jsonData.getJSONObject("incompatibilities");
+        JSONObject requirements = jsonData.getJSONObject("requirements");
+
+        for (String key : incompatibilities.keySet()) {
+            if(key.equals(partypeToSeek)){
+                List<String> liste = Arrays.asList(incompatibilities.getString(key));
+                return liste ;
+
+            }
+        }
+        return null;
     }
 
-   /* public Map<PartType, Set<PartType>> createIncompatibiltiesOfPartype() {
-        Map<PartType, Set<PartType>> res = new HashMap<PartType, Set<PartType>>();
-        //Engines
-        res.put(new PartTypeImpl("EG100", new CategoryImpl("Engine")), new HashSet<>());
-        res.put(new PartTypeImpl("EG133", new CategoryImpl("Engine")), new HashSet<>());
-        res.put(new PartTypeImpl("EG110", new CategoryImpl("Engine")), new HashSet<>());
-        res.put(new PartTypeImpl("EG210", new CategoryImpl("Engine")), new HashSet<>());
-        //Transmision
-        Set<PartType> incompatibilitiesTransmission = new HashSet<>();
-        incompatibilitiesTransmission.add(new PartTypeImpl("EG100", new CategoryImpl("Engine")));
-        incompatibilitiesTransmission.add(new PartTypeImpl("EG133", new CategoryImpl("Engine")));
-        incompatibilitiesTransmission.add(new PartTypeImpl("ED110", new CategoryImpl("Engine")));
-        res.put(new PartTypeImpl("TSF7", new CategoryImpl("Transmission")), incompatibilitiesTransmission);
-        res.put(new PartTypeImpl("TM5", new CategoryImpl("Transmission")), new HashSet<>());
-        res.put(new PartTypeImpl("TM6", new CategoryImpl("Transmission")), new HashSet<>());
-        res.put(new PartTypeImpl("TA5", new CategoryImpl("Transmission")), new HashSet<>());
-        res.put(new PartTypeImpl("TS6", new CategoryImpl("Transmission")), new HashSet<>());
-        //Exterior
-        Set<PartType> incompatibilitiesExterior = new HashSet<>();
-        res.put(new PartTypeImpl("XC", new CategoryImpl("Exterior")), new HashSet<>());
-        res.put(new PartTypeImpl("XM", new CategoryImpl("Exterior")), new HashSet<>());
-        res.put(new PartTypeImpl("XS", new CategoryImpl("Exterior")), new HashSet<>());
-
-
-    }*/
 }
