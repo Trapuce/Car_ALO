@@ -20,12 +20,15 @@ public class ConfigurationImpl implements  Configuration{
      */
     @Override
     public boolean isValid() {
-        for (PartType p: this.selectedParts) {
-                for (PartType p2 : this.selectedParts){
-                     if(!p.equals(p2.getName())  &&  p.getCategory().getName().equals(p2.getCategory().getName())){
-                          return  false ;
-                     }
-                }
+        CompatibilityManager c1 = new CompatibilityManagerImpl();
+        for (PartType partType : this.selectedParts){
+             Set<PartType> requirements = c1.getRequirements(partType);
+             if (requirements.size() !=0) {
+                 int  count = 0 ;
+                 boolean ok = true ;
+                 while (requirements.size() > count && ok ){
+                 }
+             }
         }
         return  true ;
     }
@@ -37,7 +40,11 @@ public class ConfigurationImpl implements  Configuration{
      */
     @Override
     public boolean isComplete() {
-      return  false ;
+        Set<String> result  = new HashSet<>();
+      for (PartType partType : this.selectedParts){
+                    result.add(partType.getCategory().getName());
+      }
+      return  result.size()==4 ;
     }
 
     /**

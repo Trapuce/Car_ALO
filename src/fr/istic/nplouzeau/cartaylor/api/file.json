@@ -1,58 +1,93 @@
 {
-  "incompatibilities": {
     "Engine" : {
-      "EG100": [],
-      "EG133": [],
-      "EG210": [],
-      "EG110": [],
-      "ED180": [],
-      "EH120": []
+      "EG100": {
+       "incompatibilities": [],
+        "requirements": []
+      },
+      "EG133": {
+        "incompatibilities": [],
+        "requirements": []
+      },
+      "EG210": {
+        "incompatibilities": [],
+        "requirements": []
+      },
+      "ED110": {
+        "incompatibilities": [],
+        "requirements": []
+      },
+      "ED180": {
+        "incompatibilities": [],
+        "requirements": []
+      },
+      "EH120": {
+        "incompatibilities": [],
+        "requirements": ["TC120"]
+      }
     },
     "Transmission" :{
-      "TM5": [],
-      "TM6": [],
-      "TA5": [],
-      "TS6": [],
-      "TSF7": [
-        "EG100",
-        "EG133",
-        "ED110"
-      ],
-      "TC120": []
+      "TM5": {
+        "incompatibilities": [],
+        "requirements": []
+      },
+      "TM6": {
+        "incompatibilities": [],
+        "requirements": []
+      },
+      "TA5": {
+        "incompatibilities": ["EG100"],
+        "requirements": []
+      },
+      "TS6": {
+        "incompatibilities": [],
+        "requirements": []
+      },
+      "TSF7":{
+        "incompatibilities": [
+          "EG100",
+          "EG133",
+          "ED110"
+        ],
+        "requirements": []
+      },
+      "TC120": {
+        "incompatibilities": [],
+        "requirements": ["EH120"]
+      }
     },
    "Exterior": {
-     "XC": "EG210",
-     "XM": "EG100",
-     "XS": "EG100"
+     "XC":{
+       "incompatibilities": ["EG210"],
+       "requirements": []
+     },
+     "XM": {
+       "incompatibilities": ["EG100"],
+       "requirements": []
+     },
+     "XS":{
+       "incompatibilities": ["EG100"],
+       "requirements": ["IS"]
+     }
    },
     "Interior": {
-      "IN": [],
-      "IH": [],
-      "IS": [
-        "EG100",
-        "TM5"
-      ]
+      "IN": {
+        "incompatibilities": [],
+        "requirements": []
+      },
+      "IH": {
+        "incompatibilities": [],
+        "requirements": []
+      },
+      "IS":{
+        "incompatibilities": [
+          "EG100",
+          "TM5"
+        ],
+        "requirements": ["XS"]
+      }
     }
 
-  },
-  "requirements": {
-    "EG100": [],
-    "EG133": [],
-    "EG210": [],
-    "EG110": [],
-    "ED180": [],
-    "EH120": ["TC120"],
-    "TM5": [],
-    "TM6": [],
-    "TA5": [],
-    "TS6": [],
-    "TSF7":[],
-    "TC120": ["EH120"],
-    "XC": [],
-    "XM": [],
-    "XS": ["IS"],
-    "IN": [],
-    "IH": [],
-    "IS": ["XS"]
   }
-}
+
+
+
